@@ -1,4 +1,4 @@
-# import module
+from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 import requests
 from bs4 import BeautifulSoup
 
@@ -12,13 +12,15 @@ response = requests.get(url, headers=HEADERS)
 soup = BeautifulSoup(response.content, 'lxml')
 # print(soup.prettify())
 
-#First get the link that takes you to all the reviews
+# First get the link that takes you to all the reviews
+
+
 def read_more():
 
     cname = "a-link-emphasis a-text-bold"
     t = soup.find("a", class_=cname)
     return "https://www.amazon.in"+t["href"]
-from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
+
 
 def replace_sortby(url):
     parsed_url = urlparse(url)
@@ -33,6 +35,22 @@ def replace_sortby(url):
     modified_url = urlunparse(parsed_url._replace(query=modified_query))
     return modified_url
 
+
+def increase_page_number(url):
+    parsed_url = urlparse(url)
+    query_params = parse_qs(parsed_url.query)
+
+    # Increase the 'pageNumber' parameter by 1 if it exists
+    if 'pageNumber' in query_params:
+        page_number = int(query_params['pageNumber'][0])
+        query_params['pageNumber'] = [str(page_number + 1)]
+
+    # Construct the modified URL
+    modified_query = urlencode(query_params, doseq=True)
+    modified_url = urlunparse(parsed_url._replace(query=modified_query))
+    return modified_url
+
+
 def get_rev_top():
     newlink = read_more()
     response = requests.get(newlink, headers=HEADERS)
@@ -42,6 +60,8 @@ def get_rev_top():
     for i in soup.find_all("span", class_=cname):
         res.append(i.get_text())
     return res
+
+
 def get_rev_recent():
     newlink = read_more()
     newlink = replace_sortby(newlink)
@@ -52,8 +72,22 @@ def get_rev_recent():
     for i in soup.find_all("span", class_=cname):
         res.append(i.get_text())
     return res
+
+
 def get_rev():
     return get_rev_recent() + get_rev_top()
-print(len(get_rev()))
 
-
+#Now getting the product details
+def scrape_feature_bullets(url):
+    response = requests.get(url, headers=HEADERS)
+    soup = BeautifulSoup(response.content, 'lxml')
+    
+    feature_bullets_div = soup.find('div', id='feature-bullets')
+    
+    if feature_bullets_div:
+        span_tags = feature_bullets_div.find_all('span', class_='a-list-item')
+        extracted_text = [tag.get_text(strip=True) for tag in span_tags]
+        return extracted_text
+    
+    return None
+print(scrape_feature_bullets(url))
