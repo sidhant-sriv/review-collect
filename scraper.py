@@ -64,7 +64,7 @@ def get_rev_top(url):
     cname = "a-size-base review-text review-text-content"
     res = []
     for i in soup.find_all("span", class_=cname):
-        res.append(i.get_text())
+        res.append(i.get_text().strip())
     return res
 
 
@@ -76,7 +76,7 @@ def get_rev_recent(url):
     cname = "a-size-base review-text review-text-content"
     res = []
     for i in soup.find_all("span", class_=cname):
-        res.append(i.get_text())
+        res.append(i.get_text().strip())
     return res
 
 
