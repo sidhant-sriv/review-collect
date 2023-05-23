@@ -125,10 +125,11 @@ def summarizer(url):
     return summary
 
 
-def question_answerer(url):
+def question_answerer(url, question):
     API_KEY = os.getenv("API_TOKEN")
     headers = {"Authorization": f"Bearer {API_KEY}"}
-    API_URL = "https://api-inference.huggingface.co/models/deepset/roberta-base-squad2"
+    API_URL = "https://api-inference.huggingface.co/models/valhalla/longformer-base-4096-finetuned-squadv1"
+
     def query(payload):
         data = json.dumps(payload)
         response = requests.request("POST", API_URL, headers=headers, data=data)
@@ -139,19 +140,18 @@ def question_answerer(url):
     data = query(
         {
             "inputs": {
-                "question": "What are the ideal ages for this product?",
+                "question": question,
                 "context": context,
             }
         }
     )
-    print(data)
+    return (data['answer'])
 
 # url = 'https://www.amazon.in/ASUS-i5-10300H-Graphics-Windows-FX506LH-HN258W/dp/B09RMTMBSM/?_encoding=UTF8&pd_rd_w=0CKN2&content-id=amzn1.sym.82b4a24f-081c-4d15-959c-ef13a1d3fa4e&pf_rd_p=82b4a24f-081c-4d15-959c-ef13a1d3fa4e&pf_rd_r=JFSP5WAGMQ83F0M2SYD8&pd_rd_wg=2iEa5&pd_rd_r=6533d67c-b623-44cd-aa60-771653889630&ref_=pd_gw_ci_mcx_mr_hp_atf_m&th=1'
 # url = 'https://www.amazon.in/Adidas-CBLACK-FTWWHT-Running-EW2449_8/dp/B08FZTYZZJ/ref=pd_ci_mcx_mh_mcx_views_0?pd_rd_w=3CeYO&content-id=amzn1.sym.7c947cdc-0249-4ded-881f-f826efe2df4c&pf_rd_p=7c947cdc-0249-4ded-881f-f826efe2df4c&pf_rd_r=M7QXMBS60VBR7B9FBQ4C&pd_rd_wg=7TJCv&pd_rd_r=b6099f22-cc29-4ade-9f57-59fa5797644b&pd_rd_i=B08FZTYZZJ&th=1&psc=1'
 url = 'https://www.amazon.in/Bendon-Publishing-Little-Pony-Magic/dp/B00A1AJX16/ref=sr_1_2?keywords=my+little+pony&qid=1684826176&sr=8-2'
 
 load_dotenv()
-# print(get_rev(url))
-# summarizer(url)
-print(get_product_review(url))
-question_answerer(url)
+# # summarizer(url)
+# print(get_product_review(url))
+# question_answerer(url)
