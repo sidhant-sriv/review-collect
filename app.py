@@ -10,7 +10,7 @@ def index():
 
 
 @app.route('/summarizer', methods=['GET', 'POST'])
-def summarizer():
+def summary():
     url = None
     summary = None
     myrevs = []

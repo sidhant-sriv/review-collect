@@ -1,6 +1,71 @@
-{% extends 'base.html' %}
-
-{% block content %}
-<h1>Hello, Welcome to the greatest shit ever (source: trust me bro)</h1>
-<h3>Welcome to <strong>Summazon</strong></h3>
+{% extends 'base.html' %} {% block content %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amazon Scraper</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f4f4f4;
+      }
+      .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        font-size: 40px;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      h2 {
+        font-size: 30px;
+        font-weight: 700;
+        margin-top: 30px;
+        margin-bottom: 10px;
+      }
+      p {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+      .btn {
+        font-size: 16px;
+        font-weight: 700;
+        padding: 10px 20px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome to <strong>Summazon</strong>🗿</h1>
+      <p>
+        Get valuable insights from product reviews on Amazon. Our scraping tool
+        powered by BeautifulSoup4 extracts reviews, and our AI models help
+        summarize them and provide answers to your questions.
+      </p>
+      <div class="text-center">
+        <h2>What can we do for you?</h2>
+        <a href="/summarizer" class="btn btn-primary btn-lg"
+          >Summarize Reviews</a
+        >
+        <a href="/qna" class="btn btn-secondary btn-lg">Ask Questions</a>
+      </div>
+    </div>
+  </body>
+</html>
 {% endblock %}
