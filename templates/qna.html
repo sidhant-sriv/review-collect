@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Collect Amazon Reviews</h1>
+  <p>Enter the Amazon product URL and a question to get answers from the reviews.</p>
+
+  <form id="reviewForm" method="POST" action="/qna">
+    <div class="form-group">
+      <label for="urlInput">Product URL:</label>
+      <div class="input-group">
+        <input type="text" class="form-control" id="urlInput" name="url" placeholder="Enter product URL" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="questionInput">Question:</label>
+      <div class="input-group">
+        <input type="text" class="form-control" id="questionInput" name="question" placeholder="Enter your question" required>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Get Answers</button>
+  </form>
+
+  <div id="displayData" class="display-data">
+    {% if question %}
+    <h2>{{ question }}</h2>
+    <h2>Answer:</h2>
+    <h3>{{ answer }}</h3>
+    <p>{{details}}</p>
+    {% endif %}
+  </div>
+  <style>
+    .input-group {
+      display: flex;
+      align-items: center;
+    }
+
+    .input-group .btn {
+      margin-left: 10px;
+    }
+  </style>
+{% endblock %}

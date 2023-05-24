@@ -1,0 +1,51 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Collect Amazon Reviews</h1>
+<p>Enter the Amazon product URL to collect reviews for a specific product.</p>
+
+<form id="reviewForm" method="POST" action="/summarizer">
+  <div class="form-group">
+    <label for="urlInput">Product URL:</label>
+    <div class="input-group">
+      <input
+        type="text"
+        class="form-control"
+        id="urlInput"
+        name="url"
+        placeholder="Enter product URL"
+        required
+      />
+      <button type="submit" class="btn btn-primary">Collect Reviews</button>
+    </div>
+  </div>
+</form>
+
+<div id="displayData" class="display-data">
+  {% if myrevs %}
+  <h1>{{ summary }}</h1>
+  <h2>Reviews:</h2>
+  <p>{{ myrevs }}</p>
+  {% endif %}
+</div>
+
+<style>
+  .input-group {
+    display: flex;
+    align-items: center;
+  }
+
+  .input-group .btn {
+    margin-left: 10px;
+  }
+</style>
+
+<script>
+  $(document).ready(function () {
+    $("#reviewForm").submit(function (event) {
+      event.preventDefault();
+      var url = $("#urlInput").val();
+      $("#displayData").html("<p>URL: " + url + "</p>");
+      $("#urlInput").val("");
+    });
+  });
+</script>
+{% endblock %}
